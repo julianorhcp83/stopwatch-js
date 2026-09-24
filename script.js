@@ -1,4 +1,7 @@
 const display = document.getElementById('display');
+const btnIniciar = document.getElementById('btn-iniciar');
+const btnParar = document.getElementById('btn-parar');
+const btnReiniciar = document.getElementById('btn-reiniciar');
 
 let intervalo;
 let tempoAcumulado = 0;
@@ -29,17 +32,23 @@ function iniciarCronometro(){
 }
 
 function pararCronometro(){
-    rodando = false;
-    clearInterval(intervalo);
+    if(rodando){
+        rodando = false;
+        clearInterval(intervalo);
+        tempoAcumulado+= (Date.now() - tempoInicio);
 
-    document.getElementById('btn-iniciar').innerText = "Retomar";
+        btnIniciar.innerText = "Retomar";
+    }
 }
 
 function reiniciarCronometro(){
     rodando = false;
     clearInterval(intervalo);
-    tempo = 0;
-    document.getElementById('display').innerText = "00:00:00";
-    document.getElementById('btn-iniciar').innerText = "Iniciar";
+    tempoAcumulado = 0;
+    
+    display.innerText = "00:00:00";
+    btnIniciar.innerText = "Iniciar";
 
-}   
+}  
+
+btnIniciar.addEventListener('click', iniciarCronometro);
