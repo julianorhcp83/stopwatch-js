@@ -1,7 +1,8 @@
 const display = document.getElementById('display');
 
 let intervalo;
-let tempo = 0;
+let tempoAcumulado = 0;
+let tempoInicio = 0;
 let rodando = false;
 
 function formatarTempo(tempoMs){
@@ -19,9 +20,10 @@ function formatarTempo(tempoMs){
 function iniciarCronometro(){
     if(!rodando){
         rodando = true;
+        tempoInicio = Date.now();
         intervalo = setInterval(() => {
-            tempo += 10;
-            display.innerText = formatarTempo(tempo);
+            let tempoAtual = tempoAcumulado + (Date.now() - tempoInicio);
+            display.innerText = formatarTempo(tempoAtual);
         }, 10);
     }
 }
