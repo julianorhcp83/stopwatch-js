@@ -2,11 +2,14 @@ const display = document.getElementById('display');
 const btnIniciar = document.getElementById('btn-iniciar');
 const btnParar = document.getElementById('btn-parar');
 const btnReiniciar = document.getElementById('btn-reiniciar');
+const btnVolta = document.getElementById('btn-volta');
+const lstVoltas = document.getElementById('lst-voltas')
 
 let intervalo;
 let tempoAcumulado = 0;
 let tempoInicio = 0;
 let rodando = false;
+let contVoltas = 1;
 
 function formatarTempo(tempoMs){
     let min = Math.floor(tempoMs / 60000);
@@ -48,7 +51,24 @@ function reiniciarCronometro(){
     
     display.innerText = "00:00:00";
     btnIniciar.innerText = "Iniciar";
+    lstVoltas.innerHTML = '';
+    contVoltas = 1;
 
 }  
 
+function contaVoltas(){
+    if(rodando){
+        const novaVolta = document.createElemente('li');
+        let tempoAtual = tempoAcumulado + (Date.now() - tempoInicio);
+        novaVolta.innerText = `Volta ${contVoltas}: ${formatarTempo(tempoAtual)}`;
+        lstVoltas.appendChild(novaVolta);
+        contVoltas++;
+    }
+
+    
+}
+
 btnIniciar.addEventListener('click', iniciarCronometro);
+btnParar.addEventListener('click', pararCronometro);
+btnReiniciar.addEventListener('click', reiniciarCronometro);
+btnVolta.addEventListener('click', contaVoltas);
